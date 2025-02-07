@@ -53,8 +53,13 @@ const authOptions: NextAuthOptions = {
     error: "/auth/login",
   },
   callbacks: {
-    async session({ session }) {
-      return session;
+    async session({ session, token }) {
+      return {
+        ...session, user: {
+          ...session.user,
+          id: token.sub
+        }
+      }
     },
     jwt: async ({ token, user }) => {
       if (user) {
