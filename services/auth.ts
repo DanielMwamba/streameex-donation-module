@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { cookies } from "next/headers";
@@ -36,30 +37,21 @@ const authOptions: NextAuthOptions = {
           const c = await cookies()
           c.set('token-key', token)
           return user
-        } catch (e) {
-          console.log(e)
+        } catch (e: any) {
+          console.log(e.respose)
           return null
         }
       }
     })
   ],
   callbacks: {
-    async session({ session, token }) {
-      // Send properties to the client, like an access_token and user id from a provider. 
+    async session({ session }) {
       return {
-        ...session, user: {
+        ...session,
+        user: {
           ...session.user,
-          id: token.sub
         }
       }
-    },
-    async redirect({ url, baseUrl }) {
-      if (url.startsWith("/")) return `${baseUrl}${url}`
-      else if (new URL(url).origin === baseUrl) return url
-      return baseUrl
-    },
-    jwt: async ({ token }) => {
-      return token;
     },
   },
   pages: {
