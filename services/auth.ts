@@ -1,22 +1,8 @@
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import axios from "axios";
 import { cookies } from "next/headers";
+import axiosInstance from "./axios";
 
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  password: string;
-  role: string;
-  created_at: string;
-  updated_at?: any;
-  iat: number;
-  exp: number;
-  jti: string;
-}
-
-let loggedInUser: User
 const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
@@ -36,17 +22,14 @@ const authOptions: NextAuthOptions = {
           placeholder: "Your password",
         },
       },
-      async authorize(credentials, req): Promise<any> {
+      async authorize(credentials) {
         try {
-          const { data } = await axios({
-            method: 'POST',
-            url: `${process.env.NEXT_PUBLIC_API_URL}/api/auth/signin`,
+          const { data } = await axiosInstance.post('/auth/signin', {
+            email: credentials?.email,
+            password: credentials?.password,
+          }, {
             headers: {
               'Content-Type': 'application/json'
-            },
-            data: {
-              email: credentials?.email,
-              password: credentials?.password,
             }
           })
           const { token, user } = data
@@ -61,7 +44,7 @@ const authOptions: NextAuthOptions = {
     })
   ],
   callbacks: {
-    async session({ session, token, user }) {
+    async session({ session, token }) {
       // Send properties to the client, like an access_token and user id from a provider. 
       return {
         ...session, user: {
@@ -70,15 +53,12 @@ const authOptions: NextAuthOptions = {
         }
       }
     },
-    async signIn({ user, account, profile, email, credentials }) {
-      return true
-    },
     async redirect({ url, baseUrl }) {
       if (url.startsWith("/")) return `${baseUrl}${url}`
       else if (new URL(url).origin === baseUrl) return url
       return baseUrl
     },
-    jwt: async ({ token, user }) => {
+    jwt: async ({ token }) => {
       return token;
     },
   },

@@ -1,10 +1,9 @@
-import axios from "axios"
+import axiosInstance from "./axios"
 
-export const createUser = async (dto: any) => {
+export const createUser = async (dto: {[key: string]: string}) => {
   try {
-    let res = await axios({
+    const res = await axiosInstance({
       method: "POST",
-      url: `${process.env.NEXT_PUBLIC_API_URL}/api/auth/signup`,
       data: {
         name: dto.name,
         email: dto.email,
@@ -14,7 +13,6 @@ export const createUser = async (dto: any) => {
       }
     })
     return res
-
   } catch (error) {
     console.log(error)
     return null
