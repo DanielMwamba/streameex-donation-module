@@ -1,6 +1,7 @@
 "use client"
 
 import MobileMoneyForm from "@/components/mobile-money-form";
+import StripeForm from "@/components/stripe-form";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
@@ -35,6 +36,13 @@ export default function Home() {
         {
           method == 'mobile' && (
             <MobileMoneyForm
+              eventId={eventId}
+            />
+          )
+        }
+        {
+          method == 'stripe' && (
+            <StripeForm
               eventId={eventId}
             />
           )

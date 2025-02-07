@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
-import axiosInstance from "./axios";
+import { createDonation } from "./donation";
 const token = process.env.NEXT_PUBLIC_FLEXPAY_TOKEN;
-const regex = /0/gi;
 
 export const flexpaiePayment = async (dto: { [key: string]: string | number }) => {
+  const regex = /0/gi;
   let formatedPhoneNumber = null;
 
   if ((dto.phone as any)[0] == 0) {
@@ -12,17 +12,18 @@ export const flexpaiePayment = async (dto: { [key: string]: string | number }) =
   } else {
     formatedPhoneNumber = (dto.phone as any);
   }
-  const { data } = await axiosInstance.post('/donate/flexpaie', {
+  const donation = await createDonation({
     ...dto,
-    phone: formatedPhoneNumber
-  })
+    method: 'flexpaie',
+  });
+  if (!donation) return false
   const url = process.env.NEXT_PUBLIC_FLEX_PAY_BACKEND_URL;
 
   const flexpaieDto = {
     "merchant": "GO_FREELANCE",
     "type": 1,
     "phone": formatedPhoneNumber,
-    "reference": data.reference,
+    "reference": donation.reference,
     "amount": dto.amount,
     "currency": "USD",
     "callbackUrl": `${process.env.NEXT_PUBLIC_API_URL}/donate/flexpaie-webhook`
