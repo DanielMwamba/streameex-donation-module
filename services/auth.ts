@@ -44,16 +44,6 @@ const authOptions: NextAuthOptions = {
       }
     })
   ],
-  callbacks: {
-    async session({ session }) {
-      return {
-        ...session,
-        user: {
-          ...session.user,
-        }
-      }
-    },
-  },
   pages: {
     signIn: "/auth/login",
     error: "/auth/login",
