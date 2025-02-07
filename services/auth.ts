@@ -4,9 +4,6 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import axiosInstance from "./axios";
 
 const authOptions: NextAuthOptions = {
-  session: {
-    strategy: "jwt",
-  },
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -33,9 +30,12 @@ const authOptions: NextAuthOptions = {
             }
           })
           const { user } = data
-          // const c = await cookies()
-          // c.set('token-key', token)
-          return user
+          return {
+            id: user.id,
+            email: user.email,
+            image: user.user_image,
+            name: user.name
+          }
         } catch (e: any) {
           console.log(e.respose)
           return null
