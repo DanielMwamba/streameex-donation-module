@@ -56,12 +56,17 @@ const authOptions: NextAuthOptions = {
     async session({ session }) {
       return session;
     },
-    async jwt({ token, user }) {
+    jwt: async ({ token, user }) => {
       if (user) {
-        token.user = user;
+        const u = user as unknown as any;
+
+        return {
+          ...token,
+          id: u.id,
+        };
       }
       return token;
-    }
+    },
   },
   session: {
     strategy: "jwt",
