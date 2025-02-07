@@ -6,7 +6,8 @@ export const createDonation = async (dto: { [key: string]: string | number }) =>
       ...dto,
     })
     return data;
-  } catch {
+  } catch(e) {
+    console.log(e)
     return null
   }
 }
