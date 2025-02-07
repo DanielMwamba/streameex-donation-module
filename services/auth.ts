@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { cookies } from "next/headers";
 import axiosInstance from "./axios";
 
 const authOptions: NextAuthOptions = {
@@ -33,9 +32,9 @@ const authOptions: NextAuthOptions = {
               'Content-Type': 'application/json'
             }
           })
-          const { token, user } = data
-          const c = await cookies()
-          c.set('token-key', token)
+          const { user } = data
+          // const c = await cookies()
+          // c.set('token-key', token)
           return user
         } catch (e: any) {
           console.log(e.respose)
