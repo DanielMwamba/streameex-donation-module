@@ -28,17 +28,22 @@ const authOptions: NextAuthOptions = {
             headers: {
               'Content-Type': 'application/json'
             }
-          })
-          const { user } = data
-          return {
-            id: user.id,
-            email: user.email,
-            image: user.user_image,
-            name: user.name
+          });
+
+          if (!data || !data.user) {
+            console.error("Invalid response from API:", data);
+            return null;
           }
+
+          return {
+            id: data.user.id,
+            email: data.user.email,
+            image: data.user.user_image,
+            name: data.user.name
+          };
         } catch (e: any) {
-          console.log(e.respose)
-          return null
+          console.error("Login error:", e.response?.data || e.message);
+          return null;
         }
       }
     })
@@ -47,6 +52,20 @@ const authOptions: NextAuthOptions = {
     signIn: "/auth/login",
     error: "/auth/login",
   },
-}
+  callbacks: {
+    async session({ session }) {
+      return session;
+    },
+    async jwt({ token, user }) {
+      if (user) {
+        token.user = user;
+      }
+      return token;
+    }
+  },
+  session: {
+    strategy: "jwt",
+  },
+};
 
-export default authOptions
+export default authOptions;
