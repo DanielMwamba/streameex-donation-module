@@ -3,6 +3,7 @@
 import MobileMoneyForm from "@/components/mobile-money-form";
 import PayPalDonate from "@/components/paypal-form";
 import StripeForm from "@/components/stripe-form";
+import { signOut } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
@@ -13,7 +14,11 @@ export default function Home() {
 
   if (!eventId) {
     return (
-      <div className="w-screen h-screen bg-primary"></div>
+      <div className="w-screen flex items-center justify-center h-screen bg-primary">
+        <button className="text-primary px-5 py-2 rounded-md bg-white" onClick={() => signOut({ redirect: true, callbackUrl: '/auth/login' })}>
+          Déconnexion
+        </button>
+      </div>
     )
   }
 

@@ -1,5 +1,5 @@
 "use client"
-import React from 'react';
+import React, { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -8,12 +8,13 @@ import { useSearchParams } from 'next/navigation';
 import logo from '@/public/images/logo.png'
 
 const SignUp = () => {
+  const [loading, setLoading] = useState<boolean>(false)
   const searchParams = useSearchParams()
   const callbackUrl = searchParams.get('callbackUrl') ?? '/'
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-
+    setLoading(true)
     const dto = {
       name: e.target.elements.name.value,
       email: e.target.elements.email.value,
@@ -29,6 +30,7 @@ const SignUp = () => {
       email: e.target.elements.email.value,
       password: e.target.elements.password.value,
     });
+    setLoading(false)
   };
 
   return (
@@ -118,9 +120,10 @@ const SignUp = () => {
 
           <button
             type="submit"
-            className="w-full flex items-center justify-center bg-main p-2 rounded-sm hover:bg-opacity-75 transition-colors"
+            className="w-full opacity-100 disabled:opacity-50 flex items-center justify-center bg-main p-2 rounded-sm hover:bg-opacity-75 transition-colors"
+            disabled={loading}
           >
-            Enregistrer
+            {loading ? 'En cours...' : 'Enregistrer'}
           </button>
         </form>
         <div className="w-full flex items-center justify-center">
