@@ -5,18 +5,12 @@ import { DONATION_TIERS } from "@/data/donation-tiers";
 import type { DonationTier } from "@/types/donations";
 
 export function useDonation(initialTierIndex: number = 0) {
-  const [selectedTierIndex, setSelectedTierIndex] =
-    useState<number>(initialTierIndex);
-  const [amount, setAmount] = useState<number>(
-    initialTierIndex !== null ? DONATION_TIERS[initialTierIndex].minAmount : 5
-  );
-
+  const [selectedTierIndex, setSelectedTierIndex] = useState<number>(initialTierIndex);
+  const [amount, setAmount] = useState<number>(    initialTierIndex !== null ? DONATION_TIERS[initialTierIndex].minAmount : 5);
   const [customAmount, setCustomAmount] = useState<number>(1);
 
   const getCurrentTier = useCallback((): DonationTier | null => {
-    return selectedTierIndex !== null
-      ? DONATION_TIERS[selectedTierIndex]
-      : null;
+    return selectedTierIndex !== null? DONATION_TIERS[selectedTierIndex]: null;
   }, [selectedTierIndex]);
 
   // Met à jour le montant selon le niveau sélectionné ou personnalisé
