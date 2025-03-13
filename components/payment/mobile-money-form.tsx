@@ -10,8 +10,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PaymentFormProps } from "@/types/donations";
-import { Info, Smartphone } from "lucide-react";
 import { Card, CardContent, CardTitle, CardHeader } from "../ui/card";
+import { DynamicIcon } from "../ui/dynamic-icon";
 
 export default function MobileMoneyForm({
   eventId,
@@ -60,8 +60,9 @@ export default function MobileMoneyForm({
         </div>
 
         <div className="space-y-2">
+        <DynamicIcon name="smartphone" className="w-5 h-5 mr-2 text-[#FF0099]" />
           <Label htmlFor="phone" className="text-white">
-            Numéro de téléphone
+            Numéro de téléphone Mobile money
           </Label>
           <Input
             required
@@ -85,7 +86,7 @@ export default function MobileMoneyForm({
             </div>
           ) : (
             <>
-              <Smartphone className="w-5 h-5 mr-2" />
+              <DynamicIcon name="smartphone"/>
               Payer maintenant
             </>
           )}
@@ -94,7 +95,7 @@ export default function MobileMoneyForm({
       <Card className="bg-[#0d002f]/70 border-[#FF0099]/20 shadow-md mt-5">
         <CardHeader className="pb-2">
           <CardTitle className="text-white text-lg flex items-center">
-            <Info className="w-5 h-5 mr-2 text-[#FF0099]" />
+            <DynamicIcon name="info" className="w-5 h-5 mr-2 text-[#FF0099]" />
             Comment ça marche
           </CardTitle>
         </CardHeader>

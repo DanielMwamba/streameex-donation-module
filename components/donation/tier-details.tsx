@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import type { DonationTier } from "@/types/donations";
 import { DynamicIcon } from "@/components/ui/dynamic-icon";
-import { CheckCircle } from "lucide-react";
 
 interface TierDetailsProps {
   tier: DonationTier;
@@ -35,7 +34,7 @@ export function TierDetails({ tier }: TierDetailsProps) {
         <ul className="space-y-2">
           {tier.benefits.map((benefit, index) => (
             <li key={index} className="flex items-start">
-              <CheckCircle className="w-5 h-5 text-[#FF0099] mr-2 flex-shrink-0 mt-0.5" />
+              <DynamicIcon name="check-circle" className="w-5 h-5 text-[#FF0099] mr-2 flex-shrink-0 mt-0.5" />
               <span className="text-gray-300">{benefit}</span>
             </li>
           ))}
