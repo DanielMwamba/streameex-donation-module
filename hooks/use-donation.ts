@@ -4,23 +4,22 @@ import { useState, useEffect, useCallback } from "react";
 import { DONATION_TIERS } from "@/data/donation-tiers";
 import type { DonationTier } from "@/types/donations";
 
-export function useDonation(initialTierIndex: number | null = 0) {
-  const [selectedTierIndex, setSelectedTierIndex] = useState<number | null>(
-    initialTierIndex
-  );
+export function useDonation(initialTierIndex: number = 0) {
+  const [selectedTierIndex, setSelectedTierIndex] =
+    useState<number>(initialTierIndex);
   const [amount, setAmount] = useState<number>(
     initialTierIndex !== null ? DONATION_TIERS[initialTierIndex].minAmount : 5
   );
 
   const [customAmount, setCustomAmount] = useState<number>(1);
 
-  const getSelectedTier = useCallback((): DonationTier | null => {
+  const getCurrentTier = useCallback((): DonationTier | null => {
     return selectedTierIndex !== null
       ? DONATION_TIERS[selectedTierIndex]
       : null;
   }, [selectedTierIndex]);
 
-  // Mettre à jour le montant lorsqu'un niveau est sélectionné
+  // Met à jour le montant selon le niveau sélectionné ou personnalisé
   useEffect(() => {
     if (selectedTierIndex !== null) {
       const tier = DONATION_TIERS[selectedTierIndex];
@@ -35,13 +34,12 @@ export function useDonation(initialTierIndex: number | null = 0) {
   }, [selectedTierIndex, customAmount]);
 
   // Fonction pour mettre à jour le montant
-  const setAmountSafe = useCallback(
+  const handleAmountChange = useCallback(
     (newAmount: number) => {
-      const minAmount = 1; 
+      const minAmount = 1;
       const validAmount = Math.max(minAmount, newAmount);
-
-      if (selectedTierIndex === 0) {
-        // Si le niveau personnalisé est sélectionné, mettre à jour le montant personnalisé
+      // Met à jour le montant personnalisé si le niveau sélectionné est "Custom"
+      if (DONATION_TIERS[selectedTierIndex]?.isCustom) {
         setCustomAmount(validAmount);
       } else {
         // Sinon, vérifier si le nouveau montant correspond à un niveau
@@ -68,17 +66,17 @@ export function useDonation(initialTierIndex: number | null = 0) {
         }
       }
     },
-    [selectedTierIndex]
+    [selectedTierIndex, setSelectedTierIndex]
   );
 
   return {
-    tiers: DONATION_TIERS,
+    donationTiers: DONATION_TIERS,
     selectedTierIndex,
     setSelectedTierIndex,
     amount,
-    setAmount: setAmountSafe,
+    setAmount: handleAmountChange,
     customAmount,
     setCustomAmount,
-    selectedTier: getSelectedTier(),
+    selectedTier: getCurrentTier(),
   };
 }

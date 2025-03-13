@@ -20,7 +20,7 @@ export default function Home() {
   const eventId = searchParams.get("eventId");
 
   const {
-    tiers,
+    donationTiers,
     selectedTierIndex,
     setSelectedTierIndex,
     amount,
@@ -64,7 +64,7 @@ export default function Home() {
         <CardContent className="space-y-8">
           {/* Niveaux de donation */}
           <TierSelector
-            tiers={tiers}
+            tiers={donationTiers}
             selectedTierIndex={selectedTierIndex}
             onSelectTier={setSelectedTierIndex}
             amount={amount}
