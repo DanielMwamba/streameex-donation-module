@@ -6,8 +6,8 @@ export const DONATION_TIERS: DonationTier[] = [
     name: "Pièces",
     minAmount: 1,
     iconName: "pieces",
-    description: "Choisissez votre propre montant.",
-    color: "bg-gray-400",
+    description: "",
+    color: "bg-amber-500",
     benefits: ["Soutien à l'événement"],
     isCustom: true,
   },
@@ -17,7 +17,7 @@ export const DONATION_TIERS: DonationTier[] = [
     minAmount: 5,
     iconName: "gift",
     description: "Un premier pas pour soutenir l'événement !",
-    color: "bg-amber-600",
+    color: "bg-red-500",
     benefits: ["Soutien à l'événement"],
   },
 
@@ -61,7 +61,6 @@ export const PAYMENT_METHODS: PaymentMethod[] = [
   },
 ];
 
-// Fonction utilitaire pour trouver le niveau de donation en fonction du montant
 export function findDonationTierByAmount(
   amount: number
 ): DonationTier | undefined {

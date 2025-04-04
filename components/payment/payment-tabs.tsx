@@ -46,8 +46,8 @@ export function PaymentTabs({
   }
 
   return (
-    <div className="bg-[#1a1a4a]/80 backdrop-blur-sm rounded-xl p-4 sm:p-6 border border-[#FF0099]/20">
-      <h3 className="text-xl font-bold text-white mb-4 sm:mb-6">
+    <div className="bg-[#1a1a4a]/80 backdrop-blur-sm rounded-xl p-6 sm:p-8 border border-[#FF0099]/20">
+      <h3 className="text-xl font-bold text-white mb-6">
         Choisissez votre méthode de paiement
       </h3>
       <Tabs
@@ -57,18 +57,18 @@ export function PaymentTabs({
         }
         className="w-full"
       >
-        <TabsList className="grid w-full grid-cols-3 mb-6 bg-[#0d002f]/50 h-auto">
+        <TabsList className="grid w-full grid-cols-3 mb-8 bg-[#0d002f]/50 h-auto">
           {methods.map((method) => (
             <TabsTrigger
               key={method.id}
               value={method.id}
               className={`
                 font-medium text-xs sm:text-sm md:text-base
-                py-2 sm:py-3 px-1 sm:px-2
+                py-3 sm:py-4 px-1 sm:px-3
                 data-[state=active]:bg-[#FF0099] data-[state=active]:text-white
                 flex flex-col sm:flex-row items-center justify-center sm:justify-start
                 transition-all duration-200 gap-1 sm:gap-2
-                h-auto min-h-[3rem]
+                h-auto min-h-[3.5rem]
               `}
             >
               <DynamicIcon
@@ -82,7 +82,7 @@ export function PaymentTabs({
           ))}
         </TabsList>
 
-        <div className="mt-4">
+        <div className="mt-6">
           <TabsContent value="mobile" className="mt-0">
             <MobileMoneyForm eventId={eventId} initialAmount={amount} />
           </TabsContent>

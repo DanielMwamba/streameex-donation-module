@@ -26,7 +26,6 @@ export function TierSelector({
     amount < tiers[1].minAmount ? amount : 1
   );
 
-  // Mettre à jour le montant personnalisé lorsque le montant change et que le niveau personnalisé est sélectionné
   useEffect(() => {
     if (selectedTierIndex === 0 && amount !== customAmount) {
       setCustomAmount(amount);
@@ -39,11 +38,11 @@ export function TierSelector({
   };
 
   return (
-    <div className="space-y-6">
-      <h3 className="text-2xl font-bold text-white text-center">
+    <div className="mt-16">
+      {/* <h3 className="text-2xl font-bold text-white text-center mb-2">
         Choisissez votre niveau de soutien
-      </h3>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      </h3> */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 ">
         {tiers.map((tier, index) => (
           <motion.div
             key={tier.id}
@@ -56,7 +55,7 @@ export function TierSelector({
             }`}
           >
             <div
-              className={`absolute inset-0 opacity-20 ${tier.color}`}
+              className={`absolute inset-0  opacity-20 ${tier.color}`}
               style={{
                 background: tier.isCustom
                   ? "linear-gradient(135deg, rgba(128, 128, 128, 0.3), rgba(200, 200, 200, 0.3))"
@@ -69,7 +68,7 @@ export function TierSelector({
             />
 
             <div
-              className="relative p-5 cursor-pointer bg-[#1a1a4a]/80 backdrop-blur-sm h-full flex flex-col"
+              className="relative rounded-xl p-6 cursor-pointer bg-[#1a1a4a]/80 backdrop-blur-sm h-full flex flex-col"
               onClick={() => onSelectTier(index)}
             >
               {selectedTierIndex === index && (
@@ -102,11 +101,20 @@ export function TierSelector({
                 <h4 className="font-bold text-xl text-white">{tier.name}</h4>
 
                 {tier.isCustom ? (
-                  <div className="w-full max-w-[120px] mx-auto">
-                    <Label htmlFor="customAmount" className="sr-only">
-                      Montant personnalisé
-                    </Label>
+                  <div className="w-full">
+                    <div className="bg-[#FF0099]/10 rounded-lg p-3 mb-3">
+                      <p className="text-white text-sm font-medium">
+                        Entrez le montant de votre choix (minimum 1$)
+                      </p>
+                    </div>
+
                     <div className="relative">
+                      <Label
+                        htmlFor="customAmount"
+                        className="absolute -top-2.5 left-2 px-1 text-xs font-medium text-[#FF0099] bg-[#1a1a4a]"
+                      >
+                        Votre montant
+                      </Label>
                       <Input
                         id="customAmount"
                         type="number"
@@ -116,13 +124,27 @@ export function TierSelector({
                           handleCustomAmountChange(Number(e.target.value))
                         }
                         onClick={(e) => e.stopPropagation()}
-                        className={`bg-[#0d002f]/50 text-white border-[#FF0099]/30 focus:border-[#FF0099] text-center pr-6 text-lg font-bold ${
-                          selectedTierIndex === 0 ? "border-[#FF0099]" : ""
+                        className={`bg-[#0d002f]/50 text-white border-[#FF0099]/30 focus:border-[#FF0099] text-center pr-6 text-lg font-bold h-12 ${
+                          selectedTierIndex === 0
+                            ? "border-[#FF0099] ring-2 ring-[#FF0099]/20"
+                            : ""
                         }`}
+                        placeholder="Montant personnalisé"
                       />
-                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[#FF0099] font-bold">
+                      <span className="absolute right-3 top-1/3 -translate-y-1/2 text-[#FF0099] font-bold">
                         $
                       </span>
+
+                      {selectedTierIndex === 0 && (
+                        <motion.div
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ delay: 0.3 }}
+                          className="mt-2 text-xs text-[#FF0099]"
+                        >
+                          Cliquez pour modifier le montant
+                        </motion.div>
+                      )}
                     </div>
                   </div>
                 ) : (
@@ -139,7 +161,7 @@ export function TierSelector({
 
                 <div className="w-full pt-3 mt-auto">
                   <div
-                    className={`h-1 w-full rounded-full bg-[#FF0099]/20 ${
+                    className={`h-1 w-full rounded-full ${tier.color} ${
                       selectedTierIndex === index ? "bg-[#FF0099]/50" : ""
                     }`}
                   ></div>
