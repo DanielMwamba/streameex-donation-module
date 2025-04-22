@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TierSelector } from "@/components/donation/tier-selector";
-import { TierDetails } from "@/components/donation/tier-details";
+// import { TierDetails } from "@/components/donation/tier-details";
 import { PaymentTabs } from "@/components/payment/payment-tabs";
 import { SecurityBadge } from "@/components/security-badge";
 import { useDonation } from "@/hooks/use-donation";
@@ -26,7 +26,7 @@ export default function Home() {
     setSelectedTierIndex,
     amount,
     setAmount,
-    selectedTier,
+    // selectedTier,
   } = useDonation(0);
 
   if (!eventId) {
@@ -69,10 +69,10 @@ export default function Home() {
           <CardTitle className="text-3xl md:text-4xl mt-5 font-bold text-center text-white">
             Choisissez votre niveau de soutien
           </CardTitle> <br/>
-          <p className="text-center text-gray-300 max-w-2xl mx-auto">
+          {/* <p className="text-center text-gray-300 max-w-2xl mx-auto">
             Votre contribution aide à créer une expérience exceptionnelle pour
             tous les participants
-          </p>
+          </p> */}
         </CardHeader>
 
         <CardContent className="space-y-10 px-4 sm:px-6 md:px-10 lg:px-14 pb-10">
@@ -92,7 +92,7 @@ export default function Home() {
           </motion.div>
 
           {/* Détails du niveau sélectionné */}
-          {selectedTier && (
+          {/* {selectedTier && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -100,7 +100,7 @@ export default function Home() {
             >
               <TierDetails tier={selectedTier} />
             </motion.div>
-          )}
+          )} */}
 
           {/* Méthodes de paiement */}
           <motion.div
