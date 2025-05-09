@@ -38,10 +38,10 @@ export function TierSelector({
 
   return (
     <div className="mt-8 space-y-6">
-      <div 
+      <div
         role="radiogroup"
         aria-label="Niveaux de donation"
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
       >
         {tiers.map((tier, index) => (
           <TierCard
@@ -88,7 +88,7 @@ function TierCard({
       <div
         className={cn(
           "absolute inset-0 opacity-20",
-          tier.isCustom 
+          tier.isCustom
             ? "bg-gradient-to-br from-gray-400 to-gray-600"
             : tier.color
         )}
@@ -99,7 +99,7 @@ function TierCard({
         aria-label={`Sélectionner ${tier.name}`}
         aria-checked={isSelected}
         role="radio"
-        className="relative w-full h-full rounded-xl p-6 bg-[#1a1a4a]/80 backdrop-blur-sm flex flex-col items-center text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF0099]"
+        className="relative w-full h-full rounded-xl p-4 sm:p-6 bg-[#1a1a4a]/80 backdrop-blur-sm flex flex-col items-center text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF0099]"
       >
         {isSelected && (
           <div className="absolute top-3 right-3 bg-[#FF0099] text-white rounded-full p-1">
@@ -113,23 +113,25 @@ function TierCard({
           <h3 className="font-bold text-xl text-white">{tier.name}</h3>
 
           {tier.isCustom ? (
-            <CustomAmountInput 
+            <CustomAmountInput
               value={isSelected ? amount : ""}
               onChange={onAmountChange}
               isActive={isSelected}
             />
           ) : (
-            <div className="bg-[#0d002f]/50 px-4 py-2 rounded-full">
+            <div className="bg-[#0d002f]/50 px-3 sm:px-4 py-2 rounded-full">
               <p className="text-[#FF0099] font-bold text-xl">
                 {tier.minAmount}$
               </p>
             </div>
           )}
 
-          <p className="text-gray-300 text-sm flex-grow">{tier.description}</p>
+          <p className="text-gray-300 text-xs sm:text-sm flex-grow">
+            {tier.description}
+          </p>
 
           <div className="w-full pt-3">
-            <div 
+            <div
               className={cn(
                 "h-1 w-full rounded-full",
                 isSelected ? "bg-[#FF0099]" : tier.color
@@ -150,7 +152,7 @@ function TierIcon({ tier }: { tier: DonationTier }) {
         tier.isCustom ? "bg-gray-500/50" : tier.color
       )}
     >
-      <DynamicIcon name={tier.iconName} className="w-8 h-8 text-white"/>
+      <DynamicIcon name={tier.iconName} className="w-8 h-8 text-white" />
     </div>
   );
 }
